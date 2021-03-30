@@ -3,7 +3,7 @@
 
     SynthVoice.h
     Created: 30 Mar 2021 10:38:28am
-    Author:  david
+    Author:  David López Saludes
 
   ==============================================================================
 */
@@ -26,8 +26,13 @@ public:
 	void renderNextBlock(juce::AudioBuffer<float> &outputBuffer, int startSample, int numSamples) override;
 
 private:
+
+	juce::ADSR adsr;
+	juce::ADSR::Parameters adsrParams;
+
 	juce::dsp::Oscillator<float> osc{ [](float x) {return std::sin(x); } };
 	juce::dsp::Gain<float> gain;
+	bool isPrepared{ false };
 
 	//return std::sin(x); Sine Wave
 	//return x / MathConstants<float>::pi; Saw Wave
