@@ -1,0 +1,13 @@
+#N canvas 915 163 807 539 12;
+#X obj 183 166 bng 50 250 50 0 empty empty empty 17 7 0 10 -258113
+-1 -1;
+#X obj 112 166 tgl 50 0 empty empty empty 17 7 0 10 -257985 -1 -1 0
+1;
+#X msg 133 10 0;
+#X msg 108 267 \; pd dsp \$1;
+#X text 147 143 on / off;
+#X text 184 225 PANIC!;
+#X connect 0 0 2 0;
+#X connect 1 0 3 0;
+#X connect 2 0 1 0;
+#X coords 0 -1 1 1 150 150 1 100 100;
