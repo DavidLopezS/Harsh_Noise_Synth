@@ -16,6 +16,14 @@ HarshNoiseSynthAudioProcessorEditor::HarshNoiseSynthAudioProcessorEditor (HarshN
     // Make sure that before the constructor has finished, you've set the
     // editor's size to whatever you need it to be.
     setSize (400, 300);
+
+	using SliderAttachment = juce::AudioProcessorValueTreeState::SliderAttachment;
+
+	attackAttatchment = std::make_unique<SliderAttachment>(audioProcessor.apvts, "ATTACK", attackSlider);
+	decayAttatchment = std::make_unique<SliderAttachment>(audioProcessor.apvts, "DECAY", decaySlider);
+	sustainAttatchment = std::make_unique<SliderAttachment>(audioProcessor.apvts, "SUSTAIN", sustainSlider);
+	releaseAttatchment = std::make_unique<SliderAttachment>(audioProcessor.apvts, "RELEASE", releaseSlider);
+	oscSelectAttatchment = std::make_unique<juce::AudioProcessorValueTreeState::ComboBoxAttachment>(audioProcessor.apvts, "OSC", oscSelector);
 }
 
 HarshNoiseSynthAudioProcessorEditor::~HarshNoiseSynthAudioProcessorEditor()

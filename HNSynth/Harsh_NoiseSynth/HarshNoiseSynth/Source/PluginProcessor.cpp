@@ -200,3 +200,19 @@ juce::AudioProcessor* JUCE_CALLTYPE createPluginFilter()
 }
 
 //Value Tree
+juce::AudioProcessorValueTreeState::ParameterLayout HarshNoiseSynthAudioProcessor::createParams()
+{
+	std::vector<std::unique_ptr<juce::RangedAudioParameter>> params;
+
+	//Combobox: switch oscillators
+	
+	params.push_back(std::make_unique<juce::AudioParameterChoice>("OSC", "Oscillator", juce::StringArray{ "Sine", "Saw", "Square" }, 0));
+
+	//ADSR
+	params.push_back(std::make_unique<juce::AudioParameterFloat>("ATTACK", "Attack", juce::NormalisableRange<float>{0.1f, 1.0f, }, 0.1f));//Attack
+	params.push_back(std::make_unique<juce::AudioParameterFloat>("DECAY", "Decay", juce::NormalisableRange<float>{0.1f, 1.0f, }, 0.1f));//Decay
+	params.push_back(std::make_unique<juce::AudioParameterFloat>("SUSTAIN", "Sustain", juce::NormalisableRange<float>{0.1f, 1.0f, }, 1.0f));//Sustain
+	params.push_back(std::make_unique<juce::AudioParameterFloat>("RELEASE", "Release", juce::NormalisableRange<float>{0.1f, 3.0f, }, 0.4f));//Release
+
+	return { params.begin(), params.end() };
+}
