@@ -168,7 +168,7 @@ void HarshNoiseSynthAudioProcessor::processBlock (juce::AudioBuffer<float>& buff
 			auto &release = *apvts.getRawParameterValue("RELEASE");
 
 			//load() used because we are dealing with atomic floats
-			voice->updateADSR(attack.load(), decay.load(), sustain.load(), release.load());
+			voice->update(attack.load(), decay.load(), sustain.load(), release.load());
 		}
 	}
 
