@@ -3,7 +3,7 @@
 
     SynthVoice.cpp
     Created: 30 Mar 2021 10:38:28am
-    Author:  David López Saludes
+    Author:  David LÃ³pez Saludes
 
   ==============================================================================
 */
@@ -24,6 +24,9 @@ void SynthVoice::stopNote(float velocity, bool allowTailOff)
 {
 	//Turns off the note
 	adsr.noteOff();
+
+	if (!allowTailOff || !adsr.isActive())
+		clearCurrentNote();
 }
 void SynthVoice::controllerMoved(int controllerNumber, int newControllerValue)
 {
@@ -48,6 +51,13 @@ void SynthVoice::prepareToPlay(double sampleRate, int samplesPerBlock, int outpu
 
 	gain.setGainLinear(0.01f);
 
+	adsrParams.attack = 0.8f;
+	adsrParams.decay = 0.8f;
+	adsrParams.sustain = 1.0f;
+	adsrParams.release = 1.5f;
+
+	adsr.setParameters(adsrParams);
+
 	isPrepared = true;//bool that checks if the fucntion is being called correctly
 }
 void SynthVoice::renderNextBlock(juce::AudioBuffer<float> &outputBuffer, int startSample, int numSamples)
@@ -55,9 +65,27 @@ void SynthVoice::renderNextBlock(juce::AudioBuffer<float> &outputBuffer, int sta
 	jassert(isPrepared); 
 
 	//Application of the main synth parameters
-	juce::dsp::AudioBlock<float> audioBlock{ outputBuffer };
+
+	if (!isVoiceActive())
+		return;
+
+	synthBuffer.setSize(outputBuffer.getNumChannels(), numSamples, false, false, false);
+	synthBuffer.clear();
+
+	juce::dsp::AudioBlock<float> audioBlock{ synthBuffer };
 	osc.process(juce::dsp::ProcessContextReplacing<float>(audioBlock));
 	gain.process(juce::dsp::ProcessContextReplacing<float>(audioBlock));
 
-	adsr.applyEnvelopeToBuffer(outputBuffer, startSample, numSamples);
+	adsr.applyEnvelopeToBuffer(synthBuffer, 0, synthBuffer.getNumSamples());
+
+	//if (startSample != 0)
+	//	jassertfalse;
+
+	for (int channel = 0; channel < outputBuffer.getNumChannels(); ++channel)
+	{
+		outputBuffer.addFrom(channel, startSample, synthBuffer, channel, 0, numSamples);
+
+		if (!adsr.isActive())
+			clearCurrentNote();
+	}
 }

@@ -20,7 +20,7 @@ HarshNoiseSynthAudioProcessor::HarshNoiseSynthAudioProcessor()
                       #endif
                        .withOutput ("Output", juce::AudioChannelSet::stereo(), true)
                      #endif
-                       )
+                       ), apvts(*this, nullptr, "Parameters", createParams())
 #endif
 {
 	synth.addSound(new SynthSound());
@@ -163,6 +163,11 @@ void HarshNoiseSynthAudioProcessor::processBlock (juce::AudioBuffer<float>& buff
 			//LFO
 		}
 	}
+
+	for(const juce::MidiMessageMetadata metadata : midiMessages)
+		if (metadata.numBytes == 3)
+			juce::Logger::writeToLog("Timestamp: " + juce::String(metadata.getMessage().getTimeStamp()));
+
 
 	synth.renderNextBlock(buffer, midiMessages, 0, buffer.getNumSamples());
 }

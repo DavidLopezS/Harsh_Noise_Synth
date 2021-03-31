@@ -3,7 +3,7 @@
 
     SynthVoice.h
     Created: 30 Mar 2021 10:38:28am
-    Author:  David López Saludes
+    Author:  David LÃ³pez Saludes
 
   ==============================================================================
 */
@@ -29,6 +29,7 @@ private:
 
 	juce::ADSR adsr;
 	juce::ADSR::Parameters adsrParams;
+	juce::AudioBuffer<float> synthBuffer;
 
 	juce::dsp::Oscillator<float> osc{ [](float x) {return std::sin(x); } };
 	juce::dsp::Gain<float> gain;
