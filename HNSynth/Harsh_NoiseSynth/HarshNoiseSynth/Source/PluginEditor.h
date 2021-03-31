@@ -26,6 +26,8 @@ public:
 
 private:
 
+	void HarshNoiseSynthAudioProcessorEditor::setSliderParams(juce::Slider& slider);
+
 	juce::Slider attackSlider;
 	juce::Slider decaySlider;
 	juce::Slider sustainSlider;
