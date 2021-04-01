@@ -159,7 +159,6 @@ void HarshNoiseSynthAudioProcessor::processBlock (juce::AudioBuffer<float>& buff
 		if(auto voice = dynamic_cast<SynthVoice*>(synth.getVoice(i)))
 		{
 			
-			
 			//LFO
 
 			//ADSR
@@ -170,8 +169,8 @@ void HarshNoiseSynthAudioProcessor::processBlock (juce::AudioBuffer<float>& buff
 
 			//Osc controll
 			auto &oscWaveChoice = *apvts.getRawParameterValue("OSC1WAVETYPE");
-			auto &fmDepth = *apvts.getRawParameterValue("FMDEPTH");
-			auto &fmFreq = *apvts.getRawParameterValue("FMFREQ");
+			auto &fmDepth = *apvts.getRawParameterValue("OSC1FMFREQ");
+			auto &fmFreq = *apvts.getRawParameterValue("OSC1FMDEPTH");
 
 			//load() used because we are dealing with atomic floats
 			voice->update(attack.load(), decay.load(), sustain.load(), release.load());
@@ -225,8 +224,8 @@ juce::AudioProcessorValueTreeState::ParameterLayout HarshNoiseSynthAudioProcesso
 	params.push_back(std::make_unique<juce::AudioParameterChoice>("OSC1WAVETYPE", "Osc 1 Wave Type", juce::StringArray{ "Sine", "Saw", "Square" }, 0));
 
 	//FM Synthesis
-	params.push_back(std::make_unique<juce::AudioParameterFloat>("FMFREQ", "FM Frequency", juce::NormalisableRange<float>{0.0f, 1000.0f, }, 5.0f));//Fm Freq
-	params.push_back(std::make_unique<juce::AudioParameterFloat>("FMDEPTH", "FM Depth", juce::NormalisableRange<float>{0.0f, 1000.0f, }, 500.0f));//Fm Depth
+	params.push_back(std::make_unique<juce::AudioParameterFloat>("OSC1FMFREQ", "Osc 1 FM Frequency", juce::NormalisableRange<float>{0.0f, 1000.0f, 0.01f, 0.3f }, 0.0f));//Fm Freq
+	params.push_back(std::make_unique<juce::AudioParameterFloat>("OSC1FMDEPTH", "Osc 1 FM Depth", juce::NormalisableRange<float>{0.0f, 1000.0f, 0.01f, 0.3f }, 0.0f));//Fm Depth
 
 	//ADSR
 	params.push_back(std::make_unique<juce::AudioParameterFloat>("ATTACK", "Attack", juce::NormalisableRange<float>{0.1f, 1.0f, }, 0.1f));//Attack
