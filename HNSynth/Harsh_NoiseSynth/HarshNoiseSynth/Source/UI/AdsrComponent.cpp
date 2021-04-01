@@ -3,7 +3,7 @@
 
     AdsrComponent.cpp
     Created: 31 Mar 2021 6:00:06pm
-    Author:  david
+    Author:  David López Saludes
 
   ==============================================================================
 */

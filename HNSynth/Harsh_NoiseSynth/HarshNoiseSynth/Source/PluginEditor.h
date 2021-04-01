@@ -11,6 +11,7 @@
 #include <JuceHeader.h>
 #include "PluginProcessor.h"
 #include "UI/AdsrComponent.h"
+#include "UI/OscComponent.h"
 
 //==============================================================================
 /**
@@ -26,14 +27,11 @@ public:
     void resized() override;
 
 private:
-
-	juce::ComboBox oscSelector;
-
-	std::unique_ptr<juce::AudioProcessorValueTreeState::ComboBoxAttachment> oscSelectAttatchment;
-
 	// This reference is provided as a quick way for your editor to
 	// access the processor object that created it.
 	HarshNoiseSynthAudioProcessor& audioProcessor;
+
+	OscComponent osc;
 
 	AdsrComponent adsr;
 

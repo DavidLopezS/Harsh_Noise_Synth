@@ -3,7 +3,7 @@
 
     AdsrData.cpp
     Created: 31 Mar 2021 6:00:42pm
-    Author:  david
+    Author:  David López Saludes
 
   ==============================================================================
 */
