@@ -158,20 +158,25 @@ void HarshNoiseSynthAudioProcessor::processBlock (juce::AudioBuffer<float>& buff
 	{
 		if(auto voice = dynamic_cast<SynthVoice*>(synth.getVoice(i)))
 		{
-			//Osc controll
-			//ADSR
+			
+			
 			//LFO
 
+			//ADSR
 			auto &attack = *apvts.getRawParameterValue("ATTACK");
 			auto &decay = *apvts.getRawParameterValue("DECAY");
 			auto &sustain = *apvts.getRawParameterValue("SUSTAIN");
 			auto &release = *apvts.getRawParameterValue("RELEASE");
 
+			//Osc controll
 			auto &oscWaveChoice = *apvts.getRawParameterValue("OSC1WAVETYPE");
+			auto &fmDepth = *apvts.getRawParameterValue("FMDEPTH");
+			auto &fmFreq = *apvts.getRawParameterValue("FMFREQ");
 
 			//load() used because we are dealing with atomic floats
 			voice->update(attack.load(), decay.load(), sustain.load(), release.load());
 			voice->getOscillator().setWaveType(oscWaveChoice);
+			voice->getOscillator().setFmParams(fmDepth, fmFreq);
 		}
 	}
 
@@ -217,7 +222,11 @@ juce::AudioProcessorValueTreeState::ParameterLayout HarshNoiseSynthAudioProcesso
 
 	//Combobox: switch oscillators
 	
-	params.push_back(std::make_unique<juce::AudioParameterChoice>("OSC", "Oscillator", juce::StringArray{ "Sine", "Saw", "Square" }, 0));
+	params.push_back(std::make_unique<juce::AudioParameterChoice>("OSC1WAVETYPE", "Osc 1 Wave Type", juce::StringArray{ "Sine", "Saw", "Square" }, 0));
+
+	//FM Synthesis
+	params.push_back(std::make_unique<juce::AudioParameterFloat>("FMFREQ", "FM Frequency", juce::NormalisableRange<float>{0.0f, 1000.0f, }, 5.0f));//Fm Freq
+	params.push_back(std::make_unique<juce::AudioParameterFloat>("FMDEPTH", "FM Depth", juce::NormalisableRange<float>{0.0f, 1000.0f, }, 500.0f));//Fm Depth
 
 	//ADSR
 	params.push_back(std::make_unique<juce::AudioParameterFloat>("ATTACK", "Attack", juce::NormalisableRange<float>{0.1f, 1.0f, }, 0.1f));//Attack
@@ -225,7 +234,7 @@ juce::AudioProcessorValueTreeState::ParameterLayout HarshNoiseSynthAudioProcesso
 	params.push_back(std::make_unique<juce::AudioParameterFloat>("SUSTAIN", "Sustain", juce::NormalisableRange<float>{0.1f, 1.0f, }, 1.0f));//Sustain
 	params.push_back(std::make_unique<juce::AudioParameterFloat>("RELEASE", "Release", juce::NormalisableRange<float>{0.1f, 3.0f, }, 0.4f));//Release
 
-	params.push_back(std::make_unique<juce::AudioParameterChoice>("OSC1WAVETYPE", "Osc 1 Wave Type", juce::StringArray{ "Sine", "Saw", "Square" }, 0));
+	
 
 	return { params.begin(), params.end() };
 }
