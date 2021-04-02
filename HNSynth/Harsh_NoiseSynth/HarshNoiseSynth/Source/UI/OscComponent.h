@@ -36,6 +36,7 @@ private:
 	std::unique_ptr<Attachment> fmFreqAttatchment;
 	std::unique_ptr<Attachment> fmDepthAttatchment;
 
+	juce::Label waveSelectorLabel{ "Wave Type", "Wave Type" };
 	juce::Label fmFreqLabel{ "FM Freq", "FM Freq" };
 	juce::Label fmDepthLabel{ "FM Depth", "FM Depth" };
 
