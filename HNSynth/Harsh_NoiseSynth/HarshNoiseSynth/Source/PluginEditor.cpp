@@ -14,12 +14,13 @@ HarshNoiseSynthAudioProcessorEditor::HarshNoiseSynthAudioProcessorEditor (HarshN
     : AudioProcessorEditor (&p), 
 	audioProcessor (p), 
 	osc (audioProcessor.apvts, "OSC1WAVETYPE", "OSC1FMFREQ", "OSC1FMDEPTH"), 
-	adsr (audioProcessor.apvts),
-	filter(audioProcessor.apvts, "FILTERTYPE", "FILTERFREQ", "FILTERES")
+	adsr ("Amp Envelope", audioProcessor.apvts, "ATTACK", "DECAY", "SUSTAIN", "RELEASE"),
+	filter(audioProcessor.apvts, "FILTERTYPE", "FILTERFREQ", "FILTERES"),
+	modAdsr("Mod Envelope", audioProcessor.apvts, "MODATTACK", "MODDECAY", "MODSUSTAIN", "MODRELEASE")
 {
     // Make sure that before the constructor has finished, you've set the
     // editor's size to whatever you need it to be.
-	setSize(600, 500);
+	setSize(620, 500);
 
 	//make adsr visible
 	addAndMakeVisible(osc);
@@ -29,6 +30,9 @@ HarshNoiseSynthAudioProcessorEditor::HarshNoiseSynthAudioProcessorEditor (HarshN
 
 	//make filter visible
 	addAndMakeVisible(filter);
+
+	//make mod adsr visible
+	addAndMakeVisible(modAdsr);
 }
 
 HarshNoiseSynthAudioProcessorEditor::~HarshNoiseSynthAudioProcessorEditor()
@@ -47,8 +51,11 @@ void HarshNoiseSynthAudioProcessorEditor::resized()
 	const auto paddingX = 5;
 	const auto paddingY = 35; 
 	const auto paddingY2 = 235;
+	const auto width = 300;
+	const auto height = 200;
 
-	osc.setBounds(paddingX, paddingY, 300, 200);
-	adsr.setBounds(osc.getRight(), paddingY, 280, 200);
-	filter.setBounds(paddingX, paddingY2, 300, 200);
+	osc.setBounds(paddingX, paddingY, width, height);
+	adsr.setBounds(osc.getRight(), paddingY, width, height);
+	filter.setBounds(paddingX, paddingY2, width, height);
+	modAdsr.setBounds(filter.getRight(), paddingY2, width, height);
 }
