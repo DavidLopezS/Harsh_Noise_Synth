@@ -3,7 +3,7 @@
 
     OscComponent.cpp
     Created: 1 Apr 2021 6:10:50pm
-    Author:  David López Saludes
+    Author:  David LÃ³pez Saludes
 
   ==============================================================================
 */

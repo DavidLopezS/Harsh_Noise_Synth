@@ -3,7 +3,7 @@
 
     AdsrComponent.h
     Created: 31 Mar 2021 6:00:05pm
-    Author:  David López Saludes
+    Author:  David LÃ³pez Saludes
 
   ==============================================================================
 */

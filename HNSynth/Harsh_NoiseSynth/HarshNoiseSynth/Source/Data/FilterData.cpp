@@ -3,7 +3,7 @@
 
     FilterData.cpp
     Created: 2 Apr 2021 11:31:39am
-    Author:  David López Saludes
+    Author:  David LÃ³pez Saludes
 
   ==============================================================================
 */

@@ -3,7 +3,7 @@
 
     OscData.h
     Created: 1 Apr 2021 5:21:13pm
-    Author:  David López Saludes
+    Author:  David LÃ³pez Saludes
 
   ==============================================================================
 */
